@@ -51,14 +51,19 @@ endwhile
 E_out;
 
 if (E_in <= E_prev)
-   w = w_update;
-   E_prev = E_in
+   wPocket = w_update;
+   E_prev = E_in;
 endif
-         
+EIN(Iteration) =E_in;
+EOUT(Iteration) = E_out;
+ 
+w = w_update;         
 Iteration++; 
-plot(Iteration, E_in,"b");
-hold on
-plot(Iteration,E_out, "r");
 E_in = 0;
 E_out = 0;
 endwhile
+wPocket                %showing wPocket
+plot(EIN,"b");
+hold on
+plot(EOUT, "r");
+
