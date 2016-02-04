@@ -1,0 +1,34 @@
+clear all;
+close all;
+
+TrainingData = dlmread("Iris_data_norm_train.txt", ",");   %taking "," as a delimeter in data file
+TestData     = dlmread("iris_data_norm_test.txt", ",");
+
+[TrainingRow, TrainingColumn] = size(TrainingData);
+[TestRow, TestColumn] = size(TestData);
+
+% seperating Y and X from the above matrix into two submatrix
+
+Train_Y = TrainingData(1:TrainingRow, TrainingColumn);   % As last column is Y 
+Train_X = TrainingData(1:TrainingRow, 1:TrainingColumn-1); %AS in out data file all column except last one are for X
+
+%finding psuedo-inverse of X, assuming it exist
+
+Transpose_X = transpose(Train_X);
+
+
+%inv_X = inv(Train_X);
+
+% finding W
+Weight = (inv(Transpose_X*Train_X)*Transpose_X)*Train_Y;
+
+%%%% Now we have testing part 
+Error = 0;
+
+for row = 1:TestRow	
+   if (TestData(row, TestColumn) != sign(TestData(row, 1:(TestColumn-1))*Weight));
+       Error = Error + 1;
+   endif
+endfor
+   
+Error   
